@@ -1,9 +1,14 @@
 - project = project || @project
 .git-clone-holder.input-group
-  .input-group-btn
-    %button{class: "btn #{ 'active' if default_clone_protocol == 'ssh' }", :"data-clone" => project.ssh_url_to_repo} SSH
-    %button{class: "btn #{ 'active' if default_clone_protocol == 'http' }", :"data-clone" => project.http_url_to_repo}= gitlab_config.protocol.upcase
-  = text_field_tag :project_clone, default_url_to_repo(project), class: "one_click_select form-control", readonly: true
+  -if clone_ssh? or clone_http?
+    .input-group-btn
+      - if clone_ssh?
+        %button{class: "btn #{ 'active' if default_clone_protocol == 'ssh' }", :"data-clone" => project.ssh_url_to_repo} SSH
+      - if clone_http?
+        %button{class: "btn #{ 'active' if default_clone_protocol == 'http' }", :"data-clone" => project.http_url_to_repo}= gitlab_config.protocol.upcase
+    = text_field_tag :project_clone, default_url_to_repo(project), class: "one_click_select form-control", readonly: true
+  - else
+    = text_field_tag :project_clone, 'No clone protocol allowed! Please contact your administrator.', class: 'form-control'
   - if project.kind_of?(Project)
     .input-group-addon
       .visibility-level-label.has_tooltip{'data-title' => "#{visibility_level_label(project.visibility_level)} project" }

@@ -252,6 +252,14 @@ module ProjectsHelper
     current_user ? project.url_to_repo : project.http_url_to_repo
   end
 
+  def clone_http?
+    Gitlab.config.gitlab['enable_git_over_http']
+  end
+
+  def clone_ssh?
+    Gitlab.config.gitlab['enable_git_over_ssh']
+  end
+
   def default_clone_protocol
     current_user ? "ssh" : "http"
   end

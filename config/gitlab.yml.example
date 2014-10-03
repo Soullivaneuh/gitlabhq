@@ -30,6 +30,12 @@ production: &base
     # other files that need to be changed for relative url support
     # relative_url_root: /gitlab
 
+    # Uncomment this lines if you want to desactivate some git clone method.
+    # Both settings are set to true by default.
+    # WARNING: You should desactivate both protocols or git clone will be impossible
+    enable_git_over_http: false
+    enable_git_over_ssh: true
+
     # Uncomment and customize if you can't use the default user to run GitLab (default: 'git')
     # user: git
 
